@@ -98,6 +98,11 @@ class HashTable:
         # Get the value stored in storage at that hashed_key.
         node = self.storage[hashed_key]
 
+        # If that node is the desired one, point the storage[hashed_key] to its next.
+        if node.key == key:
+            self.storage[hashed_key] = node.next
+            return
+
         # Traverse the LL until the key is found or the end of the LL is reached.
         prev = node
         while node is not None and node.key != key:
@@ -169,11 +174,21 @@ if __name__ == "__main__":
     print(ht.retrieve("line_2"))
     print(ht.retrieve("line_3"))
 
+    print('')
+    # Test remove
     ht.remove("line_3")
     print(ht.retrieve("line_3"))
     ht.insert("line_3", "Linked list saves the day!")
     print(ht.retrieve("line_3"))
 
+    print('')
+    ht.remove("line_1")
+    print(ht.retrieve("line_1"))
+    ht.insert("line_1", "Tiny hash table with a reinsert")
+    print(ht.retrieve("line_1"))
+    print('')
+
+    # Test update
     ht.insert("line_1", "Tiny hash table with a value change")
     print(ht.retrieve("line_1"))
     print(ht.retrieve("line_2"))
