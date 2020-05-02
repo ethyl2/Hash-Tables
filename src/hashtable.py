@@ -72,12 +72,18 @@ class HashTable:
             self.storage[hashed_key] = new_linked_pair
             return
 
-        prev = node
-        while node is not None:
+        # prev = node
+        while node is not None and node.key != key:
             prev = node
             node = node.next
 
-        prev.next = new_linked_pair
+        if node is None:
+            prev.next = new_linked_pair
+
+        else:
+            # The key was found, so update the value
+            next_to_pass_on = node.next
+            node.value = value
 
     def remove(self, key):
         '''
@@ -85,7 +91,6 @@ class HashTable:
 
         Print a warning if the key is not found.
 
-        Fill this in.
         '''
         # Get the hashed_key.
         hashed_key = self._hash_mod(key)
@@ -156,6 +161,11 @@ if __name__ == "__main__":
     ht.remove("line_3")
     print(ht.retrieve("line_3"))
     ht.insert("line_3", "Linked list saves the day!")
+    print(ht.retrieve("line_3"))
+
+    ht.insert("line_1", "Tiny hash table with a value change")
+    print(ht.retrieve("line_1"))
+    print(ht.retrieve("line_2"))
     print(ht.retrieve("line_3"))
 
     '''
