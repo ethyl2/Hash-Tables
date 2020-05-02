@@ -55,11 +55,25 @@ class HashTable:
         Fill this in.
         # First, get the hashed_key
         hashed_key = self._hash_mod(key)
-        # For Part 1, if hashed_key is already in hashtable. If so, generate an error warning.
+        # For Part 1, check if hashed_key is already in hashtable. If so, generate an error warning.
         # If the hashed_key is not already in the hashtable, create a LinkedPair instance with its key and value.
-        # Then check if a LL already exists at that hashed_key index. If not, add the LinkedPair instance. If so, add the LinkedPair index to the end of the LL.
+        # For part 2, check if a LL already exists at that hashed_key index. If not, add the LinkedPair instance. If so, add the LinkedPair index to the end of the LL.
         '''
-        pass
+        hashed_key = self._hash_mod(key)
+        # print(f'{key} is stored at {str(hashed_key)}')
+        new_linked_pair = LinkedPair(key, value)
+
+        node = self.storage[hashed_key]
+        if node is None:
+            self.storage[hashed_key] = new_linked_pair
+            return
+
+        prev = node
+        while node is not None:
+            prev = node
+            node = node.next
+
+        prev.next = new_linked_pair
 
     def remove(self, key):
         '''
@@ -79,7 +93,20 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        # Compute hash
+        hashed_key = self._hash_mod(key)
+
+        # Get the first node in LL in storage
+        node = self.storage[hashed_key]
+
+        # Traverse the linked list at this node until the key is found or the end is reached
+        while node is not None and node.key != key:
+            node = node.next
+
+        if node is None:
+            return None
+        else:
+            return node.value
 
     def resize(self):
         '''
@@ -101,10 +128,11 @@ if __name__ == "__main__":
     print("")
 
     # Test storing beyond capacity
+
     print(ht.retrieve("line_1"))
     print(ht.retrieve("line_2"))
     print(ht.retrieve("line_3"))
-
+    '''
     # Test resizing
     old_capacity = len(ht.storage)
     ht.resize()
@@ -118,3 +146,4 @@ if __name__ == "__main__":
     print(ht.retrieve("line_3"))
 
     print("")
+    '''
