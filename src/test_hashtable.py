@@ -88,8 +88,6 @@ class TestHashTable(unittest.TestCase):
         return_value = ht.retrieve("key-9")
         self.assertTrue(return_value == "new-val-9")
 
-
-'''
     def test_hash_table_removes_correctly(self):
         ht = HashTable(8)
 
@@ -156,7 +154,7 @@ class TestHashTable(unittest.TestCase):
         self.assertTrue(return_value is None)
         return_value = ht.retrieve("key-9")
         self.assertTrue(return_value is None)
-
+    '''
     def test_hash_table_resize(self):
         ht = HashTable(8)
 
@@ -195,8 +193,7 @@ class TestHashTable(unittest.TestCase):
         self.assertTrue(return_value == "val-8")
         return_value = ht.retrieve("key-9")
         self.assertTrue(return_value == "val-9")
-
-'''
+    '''
 
 
 if __name__ == '__main__':

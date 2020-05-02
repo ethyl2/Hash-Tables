@@ -59,7 +59,7 @@ class HashTable:
 
         3. Grab the value stored in the LL storage at that hashed_key. If it is None, stick the LinkedPair instance there.
 
-            Otherwise, traverse the LL until the current node has no .next property. 
+            Otherwise, traverse the LL until the current node has no .next property.
 
             Assign its .next property to point at the new LinkedPair instance.
 
@@ -138,9 +138,20 @@ class HashTable:
         Doubles the capacity of the hash table and
         rehash all key/value pairs.
 
-        Fill this in.
         '''
-        pass
+        self.capacity = self.capacity * 2
+
+        new_storage = [None] * self.capacity
+
+        for i in range(len(self.storage)):
+            node = self.storage[i]
+
+            while node is not None:
+                # traverse the LL to rehash each key/value pair
+                hashed_key = self._hash_mod(node.key)
+                new_storage[hashed_key] = node
+                node = node.next
+        self.storage = new_storage
 
 
 if __name__ == "__main__":
@@ -168,7 +179,6 @@ if __name__ == "__main__":
     print(ht.retrieve("line_2"))
     print(ht.retrieve("line_3"))
 
-    '''
     # Test resizing
     old_capacity = len(ht.storage)
     ht.resize()
@@ -182,4 +192,3 @@ if __name__ == "__main__":
     print(ht.retrieve("line_3"))
 
     print("")
-    '''
