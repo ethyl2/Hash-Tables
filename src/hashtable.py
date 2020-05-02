@@ -52,15 +52,19 @@ class HashTable:
 
         # Part 2: Change this so that hash collisions are handled with Linked List Chaining.
 
-        Fill this in.
-        # First, get the hashed_key
+        1. Get the hashed_key.
         hashed_key = self._hash_mod(key)
-        # For Part 1, check if hashed_key is already in hashtable. If so, generate an error warning.
-        # If the hashed_key is not already in the hashtable, create a LinkedPair instance with its key and value.
-        # For part 2, check if a LL already exists at that hashed_key index. If not, add the LinkedPair instance. If so, add the LinkedPair index to the end of the LL.
+
+        2. Create a new LinkedPair instance.
+
+        3. Grab the value stored in the LL storage at that hashed_key. If it is None, stick the LinkedPair instance there.
+
+            Otherwise, traverse the LL until the current node has no .next property. 
+
+            Assign its .next property to point at the new LinkedPair instance.
+
         '''
         hashed_key = self._hash_mod(key)
-        # print(f'{key} is stored at {str(hashed_key)}')
         new_linked_pair = LinkedPair(key, value)
 
         node = self.storage[hashed_key]
@@ -83,7 +87,24 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        # Get the hashed_key.
+        hashed_key = self._hash_mod(key)
+
+        # Get the value stored in storage at that hashed_key.
+        node = self.storage[hashed_key]
+
+        # Traverse the LL until the key is found or the end of the LL is reached.
+        prev = node
+        while node is not None and node.key != key:
+            prev = node
+            node = node.next
+
+        if node is None:
+            print(f'{key} was not found')
+            return None
+        # Remove the LinkedPair node from the chain by assigning
+        # the .next pointer of the previous node to be the node that its .next pointer was pointing to.
+        prev.next = node.next
 
     def retrieve(self, key):
         '''
@@ -91,7 +112,6 @@ class HashTable:
 
         Returns None if the key is not found.
 
-        Fill this in.
         '''
         # Compute hash
         hashed_key = self._hash_mod(key)
@@ -132,6 +152,12 @@ if __name__ == "__main__":
     print(ht.retrieve("line_1"))
     print(ht.retrieve("line_2"))
     print(ht.retrieve("line_3"))
+
+    ht.remove("line_3")
+    print(ht.retrieve("line_3"))
+    ht.insert("line_3", "Linked list saves the day!")
+    print(ht.retrieve("line_3"))
+
     '''
     # Test resizing
     old_capacity = len(ht.storage)
