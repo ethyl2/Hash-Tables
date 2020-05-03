@@ -283,24 +283,24 @@ if __name__ == "__main__":
     # Test resizing
     # old_capacity = len(ht.storage)
     # ht.resize()
-    new_capacity = len(ht.storage)
-    print(new_capacity)
+    # new_capacity = len(ht.storage)
+    # print(new_capacity)
     # print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
     # Test if data intact after resizing
-    print(ht.retrieve("line_1"))
-    print(ht.retrieve("line_2"))
-    print(ht.retrieve("line_3"))
+    # print(ht.retrieve("line_1"))
+    # print(ht.retrieve("line_2"))
+    # print(ht.retrieve("line_3"))
 
-    print("")
+    # print("")
 
     # Test for _hash_djb2
     # print(ht._hash_djb2('hello world'))
 
     # Test for size_check
     # ht.size_check()
-    print(len(ht.storage))
-
+    # print(len(ht.storage))
+    '''
     ht.insert("line_4", "Let's grow the list before shrinking it.")
     ht.remove("line_4")
     ht.remove("line_3")
@@ -308,3 +308,4 @@ if __name__ == "__main__":
     # ht.size_check()
     print(len(ht.storage))
     print(ht.retrieve("line_1"))
+    '''
