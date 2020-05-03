@@ -154,7 +154,7 @@ class TestHashTable(unittest.TestCase):
         self.assertTrue(return_value is None)
         return_value = ht.retrieve("key-9")
         self.assertTrue(return_value is None)
-    '''
+
     def test_hash_table_resize(self):
         ht = HashTable(8)
 
@@ -174,17 +174,25 @@ class TestHashTable(unittest.TestCase):
         self.assertTrue(len(ht.storage) == 16)
 
         return_value = ht.retrieve("key-0")
+        # print("here's the return value")
+        # print(return_value)
         self.assertTrue(return_value == "val-0")
+
         return_value = ht.retrieve("key-1")
         self.assertTrue(return_value == "val-1")
+
         return_value = ht.retrieve("key-2")
         self.assertTrue(return_value == "val-2")
+
         return_value = ht.retrieve("key-3")
         self.assertTrue(return_value == "val-3")
+
         return_value = ht.retrieve("key-4")
         self.assertTrue(return_value == "val-4")
+
         return_value = ht.retrieve("key-5")
         self.assertTrue(return_value == "val-5")
+
         return_value = ht.retrieve("key-6")
         self.assertTrue(return_value == "val-6")
         return_value = ht.retrieve("key-7")
@@ -193,7 +201,6 @@ class TestHashTable(unittest.TestCase):
         self.assertTrue(return_value == "val-8")
         return_value = ht.retrieve("key-9")
         self.assertTrue(return_value == "val-9")
-    '''
 
 
 if __name__ == '__main__':
