@@ -26,8 +26,26 @@ class HashTable:
         """
         FNV-1 64-bit hash function
 
+        For 64-bit:
+            FNV_prime = 2^40 + 2^8 + 0xb3
+            offset_basis = 14695981039346656037
+
+        XOR operator ^
+
+        hash = offset_basis
+        for each octet_of_data to be hashed
+            hash = hash * FNV_prime
+            hash = hash xor octet_of_data
+        return hash
+
         Implement this, and/or DJB2.
         """
+        FNV_prime = 2**40 + 2**8 + 0xb3
+        hash = 14695981039346656037
+        for x in key:
+            hash = hash * FNV_prime
+            hash = hash ^ ord(x)
+        return hash & 0xFFFFFFFFFFFFFFFF
 
     def djb2(self, key):
         """
@@ -71,6 +89,10 @@ class HashTable:
 
         if node is None:
             prev.next = new_linked_pair
+
+        else:
+            # The key was found, so update the value
+            node.value = value
 
     def delete(self, key):
         """
@@ -180,7 +202,7 @@ class HashTable:
             self.resize()
 
         if self.capacity > self.initial_capacity:
-            if load_factor < 0.2:
+            if load_factor < 0.2 and self.capacity // 2 >= 128:
                 # print('time to shrink the hashtable in half')
                 self.shrink()
 
@@ -212,3 +234,5 @@ if __name__ == "__main__":
     print(ht.get("line_3"))
 
     print("")
+
+    print(ht.fnv1("hello"))

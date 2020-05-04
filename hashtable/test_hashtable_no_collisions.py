@@ -75,7 +75,7 @@ class TestHashTable(unittest.TestCase):
         ht.put("key-1", "val-1")
         ht.put("key-2", "val-2")
 
-        # ht.resize()
+        ht.resize()
 
         self.assertTrue(len(ht.storage) == 0x20000)
 
