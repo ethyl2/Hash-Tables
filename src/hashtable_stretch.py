@@ -107,7 +107,6 @@ class HashTable:
             self.storage[hashed_key] = new_linked_pair
             return
 
-        # prev = node
         while node is not None and node.key != key:
             prev = node
             node = node.next
@@ -117,7 +116,6 @@ class HashTable:
 
         else:
             # The key was found, so update the value
-            next_to_pass_on = node.next
             node.value = value
 
     def remove(self, key):
@@ -141,7 +139,7 @@ class HashTable:
             return
 
         # Traverse the LL until the key is found or the end of the LL is reached.
-        prev = node
+
         while node is not None and node.key != key:
             prev = node
             node = node.next
