@@ -1,10 +1,16 @@
 import math
 import random
 
+factorial_dict = dict()
+
+
 def slowfun(x, y):
     # TODO: Modify to produce the same results, but much faster
     v = math.pow(x, y)
-    v = math.factorial(v)
+    if factorial_dict(v):
+        # get value back
+    else:
+        v = math.factorial(v)
     v //= (x + y)
     v %= 982451653
 
