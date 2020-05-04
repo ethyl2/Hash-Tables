@@ -1,6 +1,6 @@
 import unittest
 
-from hashtable import HashTable
+from hashtable_original import HashTable
 
 
 class TestHashTable(unittest.TestCase):
