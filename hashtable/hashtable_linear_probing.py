@@ -131,6 +131,25 @@ class HashTable:
                 return self.storage[i][1]
         return None
 
+    def delete(self, key):
+        """
+        Go through the list to see if the key exists. Start at the hashed_index, because the key is more likely near it.
+        Set the value at the current index to be None if the key is found.
+        Otherwise, go through the list from the beginning until the hashed_index.
+        Set the value at the current index to be None if the key is found.
+        If the key still isn't found, return None.
+        """
+        index = self._hash_index(key)
+        for i in range(index, len(self.storage)):
+            if self.storage[i] is not None and self.storage[i][0] == key:
+                self.storage[i] = None
+                return i
+        for i in range(0, index):
+            if self.storage[i] is not None and self.storage[i][0] == key:
+                self.storage[i] = None
+                return i
+        return None
+
 
 ht = HashTable(10)
 ht.put("First Entry", "Value 1")
@@ -147,7 +166,14 @@ ht.put("Tenth Entry", "Value 10")
 ht.put("Eleventh Entry", "Value 11")
 # print(ht.storage)
 
-print(ht.get("Fifth Entry"))
+# print(ht.get("Fifth Entry"))
+# print(ht.get("Eleventh Entry"))
+# print(ht.get("Sixth Entry"))
+# print(ht.get("Hundreth Entry"))
+
+print(ht.delete("First Entry"))
+print(ht.get("First Entry"))
+print(ht.delete("Thirtieth Entry"))
+
+ht.put("Eleventh Entry", "Value 11 fits this time")
 print(ht.get("Eleventh Entry"))
-print(ht.get("Sixth Entry"))
-print(ht.get("Hundreth Entry"))
