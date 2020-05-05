@@ -144,10 +144,12 @@ class HashTable:
         for i in range(index, len(self.storage)):
             if self.storage[i] is not None and self.storage[i][0] == key:
                 self.storage[i] = None
+                self.size_check()
                 return i
         for i in range(0, index):
             if self.storage[i] is not None and self.storage[i][0] == key:
                 self.storage[i] = None
+                self.size_check()
                 return i
         return None
 
@@ -169,9 +171,9 @@ class HashTable:
             self.resize()
 
         if self.capacity > self.initial_capacity:
-            if load_factor < 0.2 and self.capacity // 2 >= 128:
+            if load_factor < 0.2:
                 print('time to shrink the hashtable in half')
-                # self.shrink()
+                self.shrink()
 
     def resize(self):
         """
@@ -212,6 +214,14 @@ class HashTable:
 
         self.storage = new_storage
 
+    def shrink(self):
+        '''
+        Halves the capacity of the hash table and
+        rehashes all key/value pairs.
+        '''
+        self.capacity = self.capacity // 2
+        self.make_new_storage()
+
 
 ht = HashTable(10)
 ht.put("First Entry", "Value 1")
@@ -244,3 +254,12 @@ print(ht.capacity)
 print(ht.get("Fifth Entry"))
 print(ht.get("Eleventh Entry"))
 print(ht.get("Sixth Entry"))
+
+ht.delete("Second Entry")
+ht.delete("Third Entry")
+ht.delete("Fourth Entry")
+ht.delete("Fifth Entry")
+ht.delete("Sixth Entry")
+ht.delete("Seventh Entry")
+ht.delete("Ninth Entry")
+print(ht.capacity)
