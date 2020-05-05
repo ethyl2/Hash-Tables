@@ -78,11 +78,19 @@ Print the word.
 If it's a "stop word", stop.
 Stop words are words that end in any of the punctuation .?!, or that punctuation followed by a ".
 Else randomly choose a word that can follow this one.
+
+Stretch Goal:
+Make sure there is always a close quote for an opening quote in the sentence.
 '''
-suff_list = ['.', '?', '!', '."', '?"', '!"']
+suff_list_no_quotes = ['.', '?', '!']
+suff_list_quotes = ['."', '?"', '!"']
 for i in range(5):
     print(f'{i + 1}.')
     start_word = random.choice(start_words)
+    if start_word.startswith('"'):
+        suff_list = suff_list_quotes
+    else:
+        suff_list = suff_list_no_quotes
     word = start_word
     print(word)
     while not word.endswith(tuple(suff_list)):
