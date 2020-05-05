@@ -27,15 +27,44 @@ def f(x):
 # combos = combinations_with_replacement(list(q), 4)
 combos = product(q, repeat=4)
 
+# Initialize a dict to store results of calling f()
+result_dict = dict()
 
 for line in combos:
     # print(line)
     # Calculate left side and right side and see if they are equal
-    first = f(line[0])
-    second = f(line[1])
+
+    first = 0
+    second = 0
+    third = 0
+    fourth = 0
+
+    # For each call of f(), check first to see if result is in the dictionary
+    if result_dict.get(line[0]):
+        first = result_dict[line[0]]
+    else:
+        first = f(line[0])
+        result_dict[line[0]] = first
+
+    if result_dict.get(line[1]):
+        second = result_dict[line[1]]
+    else:
+        second = f(line[1])
+        result_dict[line[1]] = second
+
+    if result_dict.get(line[2]):
+        third = result_dict[line[2]]
+    else:
+        third = f(line[2])
+        result_dict[line[2]] = third
+
+    if result_dict.get(line[3]):
+        fourth = result_dict[line[3]]
+    else:
+        fourth = f(line[3])
+        result_dict[line[3]] = fourth
+
     left_side = first + second
-    third = f(line[2])
-    fourth = f(line[3])
     right_side = third - fourth
     # print(f"{left_side} vs {right_side}")
     if left_side == right_side:
