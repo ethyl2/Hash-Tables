@@ -1,8 +1,7 @@
 from itertools import product
 import time
 """
-This version populates the dictionary as it goes along.
-It looks like it might be a little slower than populating the dictionary all at the beginning.
+This version will try populating a dict right at the beginning with all the values for f() using possible inputs.
 
 find all a, b, c, d in q such that
 f(a) + f(b) = f(c) - f(d)
@@ -36,38 +35,22 @@ combos = product(q, repeat=4)
 
 # Initialize dicts to store results of calling f(), doing the left sum, and finding the right difference
 result_dict = dict()
+
+for i in range(1, len(q) + 1):
+    result_dict[i] = f(i)
 '''
+# These were not making the code run any faster, so I commented them out for now.
 sum_dict = dict()
 diff_dict = dict()
 '''
+# print(len(result_dict.keys()))
 
 for line in combos:
     # Calculate left side and right side and see if they are equal
-
-    # For each call of f(), check first to see if result is in the dictionary
-    if result_dict.get(line[0]):
-        first = result_dict[line[0]]
-    else:
-        first = f(line[0])
-        result_dict[line[0]] = first
-
-    if result_dict.get(line[1]):
-        second = result_dict[line[1]]
-    else:
-        second = f(line[1])
-        result_dict[line[1]] = second
-
-    if result_dict.get(line[2]):
-        third = result_dict[line[2]]
-    else:
-        third = f(line[2])
-        result_dict[line[2]] = third
-
-    if result_dict.get(line[3]):
-        fourth = result_dict[line[3]]
-    else:
-        fourth = f(line[3])
-        result_dict[line[3]] = fourth
+    first = result_dict[line[0]]
+    second = result_dict[line[1]]
+    third = result_dict[line[2]]
+    fourth = result_dict[line[3]]
     '''
     # Check to see if sum was already calculated before doing the sum for the left side
     if sum_dict.get(f'{first},{second}'):
@@ -77,7 +60,7 @@ for line in combos:
     else:
         left = first + second
         sum_dict[f'{first},{second}'] = left
-
+    
     # Check to see if the difference was already calculated before calculating the difference on the right side.
     if diff_dict.get(f'{third},{fourth}'):
         right = diff_dict[f'{third},{fourth}']
@@ -90,6 +73,7 @@ for line in combos:
 
     if left == right:
         print(f"f({line[0]}) + f({line[1]}) = f({line[2]}) - f({line[3]})  {result_dict[line[0]]} + {result_dict[line[1]]} = {result_dict[line[2]]} - {result_dict[line[3]]}")
+
 
 end_time = time.time()
 print(end_time - start_time)
