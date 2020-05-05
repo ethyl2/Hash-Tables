@@ -79,9 +79,11 @@ class HashTable:
 
     def put(self, key, value):
         """
-        Scan forward from the hash index until we find either the key, or None
-
-        Put the key, value there
+        Scan forward from the hash index until we find either the key or go through the whole list.
+        If the key is found, update the value. (In this case, since it uses tuples, replace the whole tuple).
+        Otherwise, stick the new key-value tuple in the empty spot closest to the hashed index.
+        If the storage list is full, print a message.
+        For now, the index at which the tuple is stored is returned, or None is returned if the list is full.
         """
         index = self._hash_index(key)
         first_none = None
@@ -112,6 +114,23 @@ class HashTable:
             self.storage[first_none] = new_entry
             return first_none
 
+    def get(self, key):
+        """
+        Go through the list to see if the key exists. Start at the hashed_index, because the key is more likely near it.
+        Return the value if the key is found.
+        Otherwise, go through the list from the beginning until the hashed_index.
+        Return the value if the key is found.
+        Otherwise, return None.
+        """
+        index = self._hash_index(key)
+        for i in range(index, len(self.storage)):
+            if self.storage[i] is not None and self.storage[i][0] == key:
+                return self.storage[i][1]
+        for i in range(0, index):
+            if self.storage[i] is not None and self.storage[i][0] == key:
+                return self.storage[i][1]
+        return None
+
 
 ht = HashTable(10)
 ht.put("First Entry", "Value 1")
@@ -126,4 +145,9 @@ ht.put("Eighth Entry", "Value 8")
 ht.put("Ninth Entry", "Value 9")
 ht.put("Tenth Entry", "Value 10")
 ht.put("Eleventh Entry", "Value 11")
-print(ht.storage)
+# print(ht.storage)
+
+print(ht.get("Fifth Entry"))
+print(ht.get("Eleventh Entry"))
+print(ht.get("Sixth Entry"))
+print(ht.get("Hundreth Entry"))
