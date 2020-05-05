@@ -170,8 +170,6 @@ class HashTable:
         """
         Doubles the capacity of the hash table and
         rehash all key/value pairs.
-
-        Implement this.
         """
         self.capacity = self.capacity * 2
         self.make_new_storage()

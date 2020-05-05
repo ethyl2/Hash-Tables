@@ -107,6 +107,7 @@ class HashTable:
                 return i
 
         # At this point, the key wasn't found, so make a new entry. Put it into that list at first_none.
+        self.size_check()
         if first_none is None:
             print('Storage is full. Time to increase capacity.')
             return None
@@ -150,6 +151,67 @@ class HashTable:
                 return i
         return None
 
+    def size_check(self):
+        '''
+        Update your HashTable to automatically double in size when it grows past a load factor of 0.7
+        and half in size when it shrinks past a load factor of 0.2.
+        This (I assume the halving) should only occur 
+        if the HashTable has been resized past the initial size.
+
+        '''
+        num_entries = sum(x is not None for x in self.storage)
+        # print('num_entries: ' + str(num_entries))
+        load_factor = num_entries/self.capacity
+        # print('load factor: ' + str(load_factor))
+
+        if load_factor > 0.7:
+            print('Time to increase the capacity; load factor is ' + str(load_factor))
+            self.resize()
+
+        if self.capacity > self.initial_capacity:
+            if load_factor < 0.2 and self.capacity // 2 >= 128:
+                print('time to shrink the hashtable in half')
+                # self.shrink()
+
+    def resize(self):
+        """
+        Doubles the capacity of the hash table and
+        rehash all key/value pairs.
+        """
+        self.capacity = self.capacity * 2
+        print("New capacity: " + str(self.capacity))
+        self.make_new_storage()
+
+    def make_new_storage(self):
+        """
+        Make a new list with length of the new capacity.
+        Rehash each key and store key-values in new list
+        """
+        new_storage = [None] * self.capacity
+
+        # Loop through the old storage and put each tuple into the new storage.
+        for i in range(0, len(self.storage)):
+            if self.storage[i] is not None:
+                new_index = self._hash_index(self.storage[i][0])
+                current_tuple = self.storage[i]
+                # Loop through new_storage, starting at new_index, until an empty spot is found.
+                spot_found = False
+                for i in range(new_index, len(new_storage)):
+                    if new_storage[i] is None:
+                        new_storage[i] = current_tuple
+                        spot_found = True
+                        break
+
+                # Loop through new_storage, starting at 0, until new_index, if an empty spot hasn't been found yet.
+                if spot_found == False:
+                    for i in range(0, new_index):
+                        if new_storage[i] is None:
+                            new_storage[i] = current_tuple
+                            spot_found = True
+                            break
+
+        self.storage = new_storage
+
 
 ht = HashTable(10)
 ht.put("First Entry", "Value 1")
@@ -175,5 +237,10 @@ print(ht.delete("First Entry"))
 print(ht.get("First Entry"))
 print(ht.delete("Thirtieth Entry"))
 
-ht.put("Eleventh Entry", "Value 11 fits this time")
+# ht.put("Eleventh Entry", "Value 11 fits this time")
+# print(ht.get("Eleventh Entry"))
+# ht.size_check()
+print(ht.capacity)
+print(ht.get("Fifth Entry"))
 print(ht.get("Eleventh Entry"))
+print(ht.get("Sixth Entry"))
