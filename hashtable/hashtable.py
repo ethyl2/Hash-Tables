@@ -21,6 +21,7 @@ class HashTable:
         self.capacity = capacity  # Number of buckets in the hash table
         self.storage = [None] * capacity
         self.initial_capacity = capacity
+        self.num_keys = 0
 
     def fnv1(self, key):
         """
@@ -81,6 +82,7 @@ class HashTable:
         node = self.storage[hashed_key]
         if node is None:
             self.storage[hashed_key] = new_linked_pair
+            self.num_keys += 1
             return
 
         while node is not None and node.key != key:
@@ -89,6 +91,7 @@ class HashTable:
 
         if node is None:
             prev.next = new_linked_pair
+            self.num_keys += 1
 
         else:
             # The key was found, so update the value
@@ -111,6 +114,7 @@ class HashTable:
         # If that node is the desired one, point the storage[hashed_key] to its next.
         if node.key == key:
             self.storage[hashed_key] = node.next
+            self.num_keys -= 1
             self.size_check()
             return
 
@@ -126,6 +130,7 @@ class HashTable:
         # Remove the LinkedPair node from the chain by assigning
         # the .next pointer of the previous node to be the node that its .next pointer was pointing to.
         prev.next = node.next
+        self.num_keys -= 1
         self.size_check()
 
     def get(self, key):
@@ -190,9 +195,10 @@ class HashTable:
         if the HashTable has been resized past the initial size.
 
         '''
-        num_entries = sum(x is not None for x in self.storage)
+        # num_entries = sum(x is not None for x in self.storage)
         # print('num_entries: ' + str(num_entries))
-        load_factor = num_entries/self.capacity
+        # load_factor = num_entries/self.capacity
+        load_factor = self.num_keys/self.capacity
         # print('load factor: ' + str(load_factor))
 
         if load_factor > 0.7:
