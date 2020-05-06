@@ -200,7 +200,7 @@ class HashTable:
             self.resize()
 
         if self.capacity > self.initial_capacity:
-            if load_factor < 0.2 and self.capacity // 2 >= 128:
+            if load_factor < 0.2 and self.capacity // 2 >= 8:  # 128
                 # print('time to shrink the hashtable in half')
                 self.shrink()
 

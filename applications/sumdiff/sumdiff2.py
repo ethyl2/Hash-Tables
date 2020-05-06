@@ -18,9 +18,9 @@ f(3) + f(3) = f(12) - f(3)    18 + 18 = 54 - 18
 """
 
 # q = set(range(1, 10))
-# q = set(range(1, 200))
+q = set(range(1, 200))
 # q = (1, 3, 4, 7, 12)
-q = set(range(1, 50))
+# q = set(range(1, 50))
 # q = set(range(1, 25))
 
 
